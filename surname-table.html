@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Surnames Database</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    <meta name="msapplication-TileImage" content="images/favicon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .stats {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        .alphabet-nav {
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            position: sticky;
+            top: 0;
+            z-index: 3;
+        }
+        .alphabet-nav a {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 5px 8px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 3px;
+        }
+        .alphabet-nav a:hover {
+            background-color: #e0e0e0;
+        }
+        .letter-header td {
+            position: sticky;
+            top: 39px;
+            z-index: 1;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        #searchInput {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .regions-cell, .religions-cell, .people-cell {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .regions-cell:hover, .religions-cell:hover, .people-cell:hover {
+            overflow: visible;
+            white-space: normal;
+            background-color: #f8f8f8;
+            position: relative;
+            z-index: 1;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Home</a>
+    
+    <!-- Add this ad -->
+    <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-5529134491442168"
+                data-ad-slot="5686968187"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <h1>Indian Surnames Database</h1>
+    
+    <div class="stats" id="stats">
+        <!-- Statistics will be inserted here -->
+    </div>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for surnames, regions, castes...">
+    </div>
+    
+    <div class="alphabet-nav" id="alphabetNav">
+        <!-- Alphabet navigation will be inserted here -->
+    </div>
+    
+    <table id="surnamesTable">
+        <thead>
+            <tr>
+                <th>Surname</th>
+                <th>Origin</th>
+                <th>Meaning</th>
+                <th>Caste Association</th>
+                <th>Regions</th>
+                <th>Religions</th>
+                <th>Notable People</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Table rows will be inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Include the data.js file -->
+    <script src="data.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reference to table body
+            const tableBody = document.getElementById('tableBody');
+            const statsDiv = document.getElementById('stats');
+            const searchInput = document.getElementById('searchInput');
+            
+            // Function to populate the table
+            function populateTable(data) {
+                // Clear existing rows
+                tableBody.innerHTML = '';
+                
+                // Sort data alphabetically by surname
+                const sortedData = [...data].sort((a, b) => 
+                    a.surname.localeCompare(b.surname)
+                );
+                
+                // Group surnames by first letter
+                const groupedData = {};
+                sortedData.forEach(surname => {
+                    const firstLetter = surname.surname.charAt(0).toUpperCase();
+                    if (!groupedData[firstLetter]) {
+                        groupedData[firstLetter] = [];
+                    }
+                    groupedData[firstLetter].push(surname);
+                });
+                
+                // Add rows for each surname, grouped by letter
+                Object.keys(groupedData).sort().forEach(letter => {
+                    // Add letter header row
+                    const headerRow = document.createElement('tr');
+                    headerRow.className = 'letter-header';
+                    headerRow.innerHTML = `
+                        <td colspan="7" style="background-color: #e0e0e0; font-weight: bold; padding: 8px 12px;">
+                            ${letter} (${groupedData[letter].length} surnames)
+                        </td>
+                    `;
+                    tableBody.appendChild(headerRow);
+                    
+                    // Add surname rows for this letter
+                    groupedData[letter].forEach(surname => {
+                        const row = document.createElement('tr');
+                        
+                        // Create cells
+                        row.innerHTML = `
+                            <td>${surname.surname}</td>
+                            <td>${surname.origin}</td>
+                            <td>${surname.meaning}</td>
+                            <td>${surname.caste_association}</td>
+                            <td class="regions-cell">${Array.isArray(surname.regions) ? surname.regions.join(', ') : surname.regions}</td>
+                            <td class="religions-cell">${Array.isArray(surname.religions) ? surname.religions.join(', ') : surname.religions}</td>
+                            <td class="people-cell">${Array.isArray(surname.notable_people) ? surname.notable_people.join(', ') : surname.notable_people}</td>
+                        `;
+                        
+                        tableBody.appendChild(row);
+                    });
+                });
+            }
+            
+            // Function to display statistics
+            function displayStats() {
+                // Count different origins
+                const origins = {};
+                const regions = {};
+                const religions = {};
+                const castes = {};
+                
+                surnameDatabase.forEach(surname => {
+                    // Count origins
+                    if (origins[surname.origin]) {
+                        origins[surname.origin]++;
+                    } else {
+                        origins[surname.origin] = 1;
+                    }
+                    
+                    // Count regions
+                    if (Array.isArray(surname.regions)) {
+                        surname.regions.forEach(region => {
+                            if (regions[region]) {
+                                regions[region]++;
+                            } else {
+                                regions[region] = 1;
+                            }
+                        });
+                    }
+                    
+                    // Count religions
+                    if (Array.isArray(surname.religions)) {
+                        surname.religions.forEach(religion => {
+                            if (religions[religion]) {
+                                religions[religion]++;
+                            } else {
+                                religions[religion] = 1;
+                            }
+                        });
+                    }
+                    
+                    // Count caste associations
+                    const caste = surname.caste_association;
+                    if (castes[caste]) {
+                        castes[caste]++;
+                    } else {
+                        castes[caste] = 1;
+                    }
+                });
+                
+                // Display stats
+                statsDiv.innerHTML = `
+                    <h3>Database Statistics</h3>
+                    <p>Total Surnames: ${surnameDatabase.length}</p>
+                    <p>Unique Origins: ${Object.keys(origins).length}</p>
+                    <p>Unique Regions: ${Object.keys(regions).length}</p>
+                    <p>Unique Religions: ${Object.keys(religions).length}</p>
+                    <p>Unique Caste Associations: ${Object.keys(castes).length}</p>
+                `;
+            }
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                if (searchTerm === '') {
+                    // If search is empty, show all surnames
+                    populateTable(surnameDatabase);
+                    createAlphabetNav(surnameDatabase);
+                    return;
+                }
+                
+                // Filter surnames based on search term
+                const filteredData = surnameDatabase.filter(surname => {
+                    // Search in different fields
+                    return surname.surname.toLowerCase().includes(searchTerm) ||
+                           surname.origin.toLowerCase().includes(searchTerm) ||
+                           surname.meaning.toLowerCase().includes(searchTerm) ||
+                           surname.caste_association.toLowerCase().includes(searchTerm) ||
+                           (Array.isArray(surname.regions) && surname.regions.some(region => region.toLowerCase().includes(searchTerm))) ||
+                           (Array.isArray(surname.religions) && surname.religions.some(religion => religion.toLowerCase().includes(searchTerm))) ||
+                           surname.historical_significance.toLowerCase().includes(searchTerm) ||
+                           (Array.isArray(surname.notable_people) && surname.notable_people.some(person => person.toLowerCase().includes(searchTerm)));
+                });
+                
+                populateTable(filteredData);
+                createAlphabetNav(filteredData);
+            });
+            
+            // Function to create alphabet navigation
+            function createAlphabetNav(data) {
+                const alphabetNav = document.getElementById('alphabetNav');
+                alphabetNav.innerHTML = '';
+                
+                // Find which letters have surnames
+                const availableLetters = new Set();
+                data.forEach(surname => {
+                    availableLetters.add(surname.surname.charAt(0).toUpperCase());
+                });
+                
+                // Create alphabet links
+                const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                alphabet.forEach(letter => {
+                    const link = document.createElement('a');
+                    link.textContent = letter;
+                    link.href = '#' + letter;
+                    
+                    // If no surnames start with this letter, make it less prominent
+                    if (!availableLetters.has(letter)) {
+                        link.style.opacity = '0.4';
+                        link.style.cursor = 'default';
+                        link.href = 'javascript:void(0)';
+                    } else {
+                        // Add click event to scroll to letter section
+                        link.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            
+                            // Find letter header
+                            const letterHeaders = document.querySelectorAll('.letter-header');
+                            for (let header of letterHeaders) {
+                                if (header.textContent.trim().startsWith(letter)) {
+                                    header.scrollIntoView({ behavior: 'smooth' });
+                                    break;
+                                }
+                            }
+                        });
+                    }
+                    
+                    alphabetNav.appendChild(link);
+                });
+            }
+            
+            // Initial population
+            if (typeof surnameDatabase !== 'undefined') {
+                populateTable(surnameDatabase);
+                displayStats();
+                createAlphabetNav(surnameDatabase);
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="7">Error: surnameDatabase not found. Make sure data.js is loaded correctly.</td></tr>';
+            }
+        });
+    </script>
+</body>
+</html>

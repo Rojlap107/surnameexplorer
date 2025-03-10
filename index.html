@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Surname Explorer</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    <meta name="msapplication-TileImage" content="images/favicon.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5529134491442168"
+     crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <header>
+        <h1 title="Click to return to homepage">Indian Surname Explorer</h1>
+        <p>Discover the history, meaning and cultural context of Indian surnames</p>
+        <div class="header-links">
+            <a href="surname-table.html" class="database-link">View Full Database</a>
+            <a href="#" id="donate-button" class="donate-link">Support This Project</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Updated search section with advanced filtering -->
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Enter an Indian surname...">
+                <button id="search-button">Search</button>
+            </div>
+            
+            <div class="advanced-filters">
+                <div class="filter-toggle">
+                    <button id="toggle-filters">Advanced Filters ▼</button>
+                </div>
+                
+                <div class="filter-options" id="filter-options" style="display: none;">
+                    <div class="filter-group">
+                        <label for="region-filter">Region:</label>
+                        <select id="region-filter" multiple>
+                            <!-- Regions will be populated dynamically -->
+                            <option value="all" selected>All Regions</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="religion-filter">Religion:</label>
+                        <select id="religion-filter" multiple>
+                            <!-- Religions will be populated dynamically -->
+                            <option value="all" selected>All Religions</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="origin-filter">Origin:</label>
+                        <select id="origin-filter">
+                            <!-- Origins will be populated dynamically -->
+                            <option value="all" selected>All Origins</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="caste-filter">Caste Association:</label>
+                        <select id="caste-filter">
+                            <!-- Castes will be populated dynamically -->
+                            <option value="all" selected>All Caste Associations</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-actions">
+                        <button id="apply-filters" class="apply-button">Apply Filters</button>
+                        <button id="reset-filters" class="reset-button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <!-- Existing code -->
+            <div id="results-container">
+                <!-- Search results will appear here -->
+                <div class="initial-message">
+                    Enter a surname above to see its details
+                </div>
+            </div>
+        
+            <!-- Add this for a responsive ad -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-5529134491442168"
+                data-ad-slot="5686968187"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+        
+    </main>
+
+    <footer>
+        <div class="view-database">
+            <a href="surname-table.html" class="database-button">View Complete Surname Database</a>
+        </div>
+        <p>&copy; 2025 Indian Surname Explorer | Educational Purpose Only</p>
+        <!-- <div class="social-icons">
+            <a href="#" class="social-icon">FB</a>
+            <a href="#" class="social-icon">TW</a>
+            <a href="#" class="social-icon">IG</a>
+        </div>
+    -->
+    </footer>
+
+    <!-- Link to our data and script files -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+</body>
+</html>
